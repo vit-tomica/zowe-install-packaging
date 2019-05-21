@@ -280,14 +280,14 @@ if [[ $? -eq 0 ]]
 then
         # echo ip $ip is OK
         # Does DIG of hostname yield correct IP?
-        dig $hostname | grep -i "^$hostname.*$ip" 1> /dev/null
+        dig $hostname | grep -i ^$hostname.*$ip 1> /dev/null
         if [[ $? -eq 0 ]]
         then
             # echo dig is OK
             return 0
         else
             # what's wrong with dig?
-            dig $hostname | grep -i "^$hostname" 1> /dev/null
+            dig $hostname | grep -i ^$hostname 1> /dev/null
             if [[ $? -eq 0 ]]
             then
                 # echo dig is OK
