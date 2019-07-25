@@ -30,7 +30,6 @@ for one in $UI_PLUGIN_LIST; do
     exit 0
   fi
 
-  # NOTICE: zowe-install-iframe-plugin.sh will try to automatically create install folder based on plugin name
   EXPLORER_INSTALL_FOLDER="${one}_explorer"
   echo "  Installing Explorer UI ${EXPLORER_PLUGIN_UPPERCASE} into ${ZOWE_ROOT_DIR}/${EXPLORER_INSTALL_FOLDER} ..."  >> $LOG_FILE
   umask 0002
@@ -39,6 +38,8 @@ for one in $UI_PLUGIN_LIST; do
   cd "${ZOWE_ROOT_DIR}/${EXPLORER_INSTALL_FOLDER}"
   echo "  Unpax of ${EXPLORER_PLUGIN_PAX} into ${PWD}" >> $LOG_FILE
   pax -rf $EXPLORER_PLUGIN_PAX -ppx
+
+  . $ZOWE_ROOT_DIR/configure/zowe-install-existing-plugin.sh $ZOWE_ROOT_DIR "org.zowe.explorer-${one}" ${ZOWE_ROOT_DIR}/${EXPLORER_INSTALL_FOLDER}
 done
 
 echo "</zowe-explorer-ui-install.sh>" >> $LOG_FILE
