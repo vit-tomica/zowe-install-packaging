@@ -151,9 +151,6 @@ set +A SCRIPTS '/zlux-app-server/bin/nodeCluster.sh'\
  '/api-mediation/scripts/api-mediation-start-gateway.sh'\
  '/explorer-jobs-api/scripts/jobs-api-server-start.sh'\
  '/explorer-data-sets-api/scripts/data-sets-api-server-start.sh'\
- '/jes_explorer/scripts/start-explorer-jes-ui-server.sh'\
- '/mvs_explorer/scripts/start-explorer-mvs-ui-server.sh'\
- '/uss_explorer/scripts/start-explorer-uss-ui-server.sh'
 
 for SCRIPT in ${SCRIPTS[*]}
 do

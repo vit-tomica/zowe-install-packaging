@@ -87,24 +87,6 @@ do
                 ZOWE_ZLUX_TELNET_PORT=$value
                 export ZOWE_ZLUX_TELNET_PORT
             fi
-# Look for jobsExplorerPort= beneath zowe-desktop-apps:
-            if [[ $key == "jobsExplorerPort" ]] && [[ $section == "zowe-desktop-apps" ]] 
-            then
-                ZOWE_EXPLORER_JES_UI_PORT=$value
-                export ZOWE_EXPLORER_JES_UI_PORT
-            fi
-# Look for mvsExplorerPort= beneath zowe-desktop-apps:
-            if [[ $key == "mvsExplorerPort" ]] && [[ $section == "zowe-desktop-apps" ]] 
-            then
-                ZOWE_EXPLORER_MVS_UI_PORT=$value
-                export ZOWE_EXPLORER_MVS_UI_PORT
-            fi
-# Look for ussExplorerPort= beneath zowe-desktop-apps:
-            if [[ $key == "ussExplorerPort" ]] && [[ $section == "zowe-desktop-apps" ]] 
-            then
-                ZOWE_EXPLORER_USS_UI_PORT=$value
-                export ZOWE_EXPLORER_USS_UI_PORT
-            fi
 # Look for security= beneath terminals:
             if [[ $key == "security" ]] && [[ $section == "terminals" ]] 
             then
@@ -211,21 +193,6 @@ then
     ZOWE_ZSS_SERVER_PORT=8542
     echo "  ZOWE_ZSS_SERVER_PORT not specified:  Defaulting to 8542"
 fi
-if [[ $ZOWE_EXPLORER_JES_UI_PORT == "" ]]
-then
-    ZOWE_ZSS_SERVER_PORT=8546
-    echo "  ZOWE_EXPLORER_JES_UI_PORT not specified:  Defaulting to 8546"
-fi
-if [[ $ZOWE_EXPLORER_MVS_UI_PORT == "" ]]
-then
-    ZOWE_EXPLORER_MVS_UI_PORT=8548
-    echo "  ZOWE_EXPLORER_MVS_UI_PORT not specified:  Defaulting to 8548"
-fi
-if [[ $ZOWE_EXPLORER_USS_UI_PORT == "" ]]
-then
-    ZOWE_EXPLORER_USS_UI_PORT=8550
-    echo "  ZOWE_EXPLORER_USS_UI_PORT not specified:  Defaulting to 8550"
-fi
 if [[ $ZOWE_APIM_CATALOG_PORT == "" ]]
 then
     ZOWE_APIM_CATALOG_PORT=7552
@@ -292,9 +259,6 @@ echo "  ZOWE_EXPLORER_SERVER_DATASETS_PORT="$ZOWE_EXPLORER_SERVER_DATASETS_PORT 
 echo "  ZOWE_ZSS_SERVER_PORT="$ZOWE_ZSS_SERVER_PORT >> $LOG_FILE
 echo "  ZOWE_ZLUX_SSH_PORT="$ZOWE_ZLUX_SSH_PORT >> $LOG_FILE
 echo "  ZOWE_ZLUX_TELNET_PORT="$ZOWE_ZLUX_TELNET_PORT >> $LOG_FILE
-echo "  ZOWE_EXPLORER_JES_UI_PORT="$ZOWE_EXPLORER_JES_UI_PORT >> $LOG_FILE
-echo "  ZOWE_EXPLORER_MVS_UI_PORT="$ZOWE_EXPLORER_MVS_UI_PORT >> $LOG_FILE
-echo "  ZOWE_EXPLORER_USS_UI_PORT="$ZOWE_EXPLORER_USS_UI_PORT >> $LOG_FILE
 echo "  ZOWE_ZLUX_SECURITY_TYPE="$ZOWE_ZLUX_SECURITY_TYPE >> $LOG_FILE
 echo "  ZOWE_APIM_CATALOG_PORT="$ZOWE_APIM_CATALOG_PORT >> $LOG_FILE
 echo "  ZOWE_APIM_DISCOVERY_PORT="$ZOWE_APIM_DISCOVERY_PORT >> $LOG_FILE

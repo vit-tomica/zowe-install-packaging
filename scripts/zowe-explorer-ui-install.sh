@@ -39,7 +39,7 @@ for one in $UI_PLUGIN_LIST; do
   echo "  Unpax of ${EXPLORER_PLUGIN_PAX} into ${PWD}" >> $LOG_FILE
   pax -rf $EXPLORER_PLUGIN_PAX -ppx
 
-  . $ZOWE_ROOT_DIR/configure/zowe-install-existing-plugin.sh $ZOWE_ROOT_DIR "org.zowe.explorer-${one}" ${ZOWE_ROOT_DIR}/${EXPLORER_INSTALL_FOLDER}
+  . $INSTALL_DIR/scripts/configure/zowe-install-existing-plugin.sh $ZOWE_ROOT_DIR "org.zowe.explorer-${one}" ${ZOWE_ROOT_DIR}/${EXPLORER_INSTALL_FOLDER}
 done
 
 echo "</zowe-explorer-ui-install.sh>" >> $LOG_FILE

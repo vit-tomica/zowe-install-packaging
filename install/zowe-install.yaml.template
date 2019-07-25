@@ -21,12 +21,7 @@ api-mediation:
 zos-services:
   jobsAPIPort=8545
   mvsAPIPort=8547
-
-zowe-desktop-apps:
-  jobsExplorerPort=8546
-  mvsExplorerPort=8548
-  ussExplorerPort=8550
-
+  
 zlux-server:
   httpsPort=8544
   zssPort=8542

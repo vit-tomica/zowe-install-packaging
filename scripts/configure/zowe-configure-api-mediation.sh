@@ -182,16 +182,6 @@ services:
         gatewayUrl: api/v1
         version: 1.0.0
         documentationUrl: https://$ZOWE_EXPLORER_HOST:$ZOWE_EXPLORER_SERVER_DATASETS_PORT/swagger-ui.html
-  - serviceId: explorer-mvs
-    title: IBM z/OS MVS Explorer UI
-    description: IBM z/OS MVS Explorer UI service
-    catalogUiTileId:
-    instanceBaseUrls:
-      - https://$ZOWE_EXPLORER_HOST:$ZOWE_EXPLORER_MVS_UI_PORT/
-    homePageRelativeUrl:
-    routedServices:
-      - gatewayUrl: ui/v1
-        serviceRelativeUrl: ui/v1/explorer-mvs
 catalogUiTiles:
   datasetsAndUnixFiles:
     title: z/OS Datasets and Unix Files services
@@ -218,38 +208,12 @@ services:
         gatewayUrl: api/v1
         version: 1.0.0
         documentationUrl: https://$ZOWE_EXPLORER_HOST:$ZOWE_EXPLORER_SERVER_JOBS_PORT/swagger-ui.html
-  - serviceId: explorer-jes
-    title: IBM z/OS Jobs UI
-    description: IBM z/OS Jobs UI service
-    catalogUiTileId:
-    instanceBaseUrls:
-      - https://$ZOWE_EXPLORER_HOST:$ZOWE_EXPLORER_JES_UI_PORT/
-    homePageRelativeUrl:
-    routedServices:
-      - gatewayUrl: ui/v1
-        serviceRelativeUrl: ui/v1/explorer-jes
 catalogUiTiles:
   jobs:
     title: z/OS Jobs services
     description: IBM z/OS Jobs REST services
 EOF
 iconv -f IBM-1047 -t IBM-850 $TEMP_DIR/jobs.yml > $STATIC_DEF_CONFIG/jobs.yml	
-
-# Add static definition for USS
-cat <<EOF >$TEMP_DIR/uss.yml
-#
-services:
-  - serviceId: explorer-uss
-    title: IBM Unix System Services
-    description: IBM z/OS Unix System services UI
-    instanceBaseUrls:
-      - https://$ZOWE_EXPLORER_HOST:$ZOWE_EXPLORER_USS_UI_PORT/
-    homePageRelativeUrl:
-    routedServices:
-      - gatewayUrl: ui/v1
-        serviceRelativeUrl: ui/v1/explorer-uss
-EOF
-iconv -f IBM-1047 -t IBM-850 $TEMP_DIR/uss.yml > $STATIC_DEF_CONFIG/uss.yml	
 
 chmod -R 755 $ZOWE_ROOT_DIR/api-mediation/
 

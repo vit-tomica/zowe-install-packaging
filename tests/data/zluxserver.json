@@ -46,9 +46,6 @@
       // "plugins": ["com.rs.auth.zosmfAuth"]
       },
 
-      "explorerServer": {
-      //  "plugins": ["com.zowe.explorer.server.auth"]
-      },
       "zss": {
         "plugins": ["com.rs.auth.zssAuth"]
       } 
