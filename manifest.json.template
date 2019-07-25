@@ -53,7 +53,7 @@
       "explode": "true"
     },
     "org.zowe.explorer-jes": {
-      "artifact": "libs-snapshot-local/org/zowe/explorer-jes/0.0.20-ZLUX-APP-REWORK/explorer-jes-0.0.20-zlux-app-rework-6-20190724190429.pax"
+      "artifact": "libs-snapshot-local/org/zowe/explorer-jes/0.0.20-ZLUX-APP-REWORK/explorer-jes-0.0.20-zlux-app-rework-6-20190724190429.pax",
       "version": "~0.0.20"
     },
     "org.zowe.explorer-mvs": {
