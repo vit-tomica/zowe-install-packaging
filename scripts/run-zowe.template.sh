@@ -54,6 +54,9 @@ CATALOG_PORT={{catalog_port}} # the port the api catalog service will use
 GATEWAY_PORT={{gateway_port}} # the port the api gateway service will use
 VERIFY_CERTIFICATES={{verify_certificates}} # boolean saying if we accept only verified certificates
 STC_NAME={{stc_name}}
+JES_EXPLORER_PORT={{jes_explorer_port}}
+MVS_EXPLORER_PORT={{mvs_explorer_port}}
+USS_EXPLORER_PORT={{uss_explorer_port}}
 
 # details to be read from higher level entry that instance PARMLIB/prop file?
 KEY_ALIAS={{key_alias}}
@@ -164,6 +167,9 @@ ZOWE_EXPLORER_HOST=${ZOWE_EXPLORER_HOST}
 ZOWE_JAVA_HOME=${ZOWE_JAVA_HOME}
 LAUNCH_COMPONENTS=${LAUNCH_COMPONENTS}
 LAUNCH_COMPONENT_GROUPS=${LAUNCH_COMPONENT_GROUPS}
+JES_EXPLORER_PORT=${JES_EXPLORER_PORT}
+MVS_EXPLORER_PORT=${MVS_EXPLORER_PORT}
+USS_EXPLORER_PORT=${USS_EXPLORER_PORT}
 EOF
 
 # Copy manifest into user_dir so we know the version for support enquiries/migration
