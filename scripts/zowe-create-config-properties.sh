@@ -1,5 +1,4 @@
-sed
-  -e "s#{{root_dir}}#${ZOWE_ROOT_DIR}#" \
+sed \
   -e "s#{{zowe_prefix}}#${ZOWE_PREFIX}#" \
   -e "s#{{zowe_instance}}#${ZOWE_INSTANCE}#" \
   -e "s#{{user_dir}}#${ZOWE_USER_DIR}#" \
@@ -7,13 +6,13 @@ sed
   -e "s#{{launch_component_groups}}#${LAUNCH_COMPONENT_GROUPS}#" \
   -e "s#{{java_home}}#${ZOWE_JAVA_HOME}#" \
   -e "s#{{node_home}}#${NODE_HOME}#" \
-  -e "s#{{zosmf_port}}#${ZOSMF_PORT}#" \
-  -e "s#{{zosmf_host}}#${ZOSMF_HOST}#" \
+  -e "s#{{zosmf_port}}#${ZOWE_ZOSMF_PORT}#" \
+  -e "s#{{zosmf_host}}#${ZOWE_ZOSMF_HOST}#" \
   -e "s#{{zosmf_userid}}#${ZOWE_ZOSMF_USERID}#" \
   -e "s#{{zosmf_admin_group}}#${ZOWE_ZOSMF_ADMIN_GROUP}#" \
   -e "s#{{zosmf_keyring}}#${ZOWE_ZOSMF_KEYRING}#" \
   -e "s#{{zowe_explorer_host}}#${ZOWE_EXPLORER_HOST}#" \
-  -e "s#{{zowe_ip_address}}#${ZOWE_IP_ADDRESS}#" \
+  -e "s#{{zowe_ip_address}}#${ZOWE_IPADDRESS}#" \
   -e "s#{{key_alias}}#localhost#" \
   -e "s#{{keystore}}#${ZOWE_ROOT_DIR}/components/api-mediation/keystore/localhost/localhost.keystore.p12#" \
   -e "s#{{keystore_password}}#password#" \
@@ -21,9 +20,9 @@ sed
   -e "s#{{external_certificate}}#${ZOWE_APIM_EXTERNAL_CERTIFICATE}#" \
   -e "s#{{external_certificate_alias}}#${ZOWE_APIM_EXTERNAL_CERTIFICATE_ALIAS}#" \
   -e "s#{{external_certificate_authorities}}#${ZOWE_APIM_EXTERNAL_CERTIFICATE_AUTHORITIES}#" \
-  -e "s#{{discovery_port}}#${ZOWE_APIM_DISCOVERY_HTTP_PORT}#" \
-  -e "s#{{catalog_port}}#${ZOWE_APIM_CATALOG_HTTP_PORT}#" \
-  -e "s#{{gateway_port}}#${ZOWE_APIM_GATEWAY_HTTPS_PORT}#" \
+  -e "s#{{discovery_port}}#${ZOWE_APIM_DISCOVERY_PORT}#" \
+  -e "s#{{catalog_port}}#${ZOWE_APIM_CATALOG_PORT}#" \
+  -e "s#{{gateway_port}}#${ZOWE_APIM_GATEWAY_PORT}#" \
   -e "s#{{verify_certificates}}#${ZOWE_APIM_VERIFY_CERTIFICATES}#" \
   -e "s#{{enable_sso}}#${ZOWE_APIM_ENABLE_SSO}#" \
   -e "s#{{files_api_port}}#${ZOWE_EXPLORER_SERVER_DATASETS_PORT}#" \
@@ -35,6 +34,6 @@ sed
   -e "s#{{zss_server_port}}#${ZOWE_ZSS_SERVER_PORT}#" \
   -e "s#{{zlux_ssh_port}}#${ZOWE_ZLUX_SSH_PORT}#" \
   -e "s#{{zlux_telnet_port}}#${ZOWE_ZLUX_TELNET_PORT}#" \
-  -e "s#{{xmem_server_name}}#${ZSS_XMEM_SERVER_NAME}#" \
+  -e "s#{{xmem_server_name}}#${ZOWE_ZSS_XMEM_SERVER_NAME}#" \
   "${INSTALL_DIR}/scripts/config.template.properties" \
   > "${CONFIG_LOCATION}"
