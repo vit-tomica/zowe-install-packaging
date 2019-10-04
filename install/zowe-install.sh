@@ -72,6 +72,9 @@ cd $INSTALL_DIR/install
 # zowe-parse-yaml.sh to get the variables for install directory, APIM certificate resources, installation proc, and server ports
 . $INSTALL_DIR/scripts/zowe-parse-yaml.sh
 
+# default until we get this passed in from yaml
+CONFIG_LOCATION="${ZOWE_ROOT_DIR}/scripts/configure/config.properties"
+
 echo "Beginning install of Zowe ${ZOWE_VERSION} into directory " $ZOWE_ROOT_DIR
 
 # warn about any prior installation
@@ -138,7 +141,11 @@ cp $INSTALL_DIR/scripts/run-zowe.template.sh $ZOWE_ROOT_DIR/scripts/templates/ru
 chmod -R 755 $ZOWE_ROOT_DIR/scripts/internal
 
 #TODO LATER - do we need a better location rather than scripts - covered by zip #519
-cp $INSTALL_DIR/files/templates/ZOWESVR.template.jcl ${ZOWE_ROOT_DIR}/scripts/templates/ZOWESVR.template.jcl
+sed -e "s#{{root_dir}}#${ZOWE_ROOT_DIR}#" \
+  -e "s#{{config_location}}#${CONFIG_LOCATION}#" \
+  "$INSTALL_DIR/files/templates/ZOWESVR.template.jcl" \
+  > "${ZOWE_ROOT_DIR}/scripts/templates/ZOWESVR.jcl"
+
 
 echo "Zowe ${ZOWE_VERSION} runtime install completed into directory "$ZOWE_ROOT_DIR
 echo "The install script zowe-install.sh does not need to be re-run as it completed successfully"
@@ -152,6 +159,10 @@ cp $INSTALL_DIR/scripts/zowe-parse-yaml.sh ${ZOWE_ROOT_DIR}/scripts/configure
 grep -v "rootDir=" $INSTALL_DIR/install/zowe-install.yaml > ${ZOWE_ROOT_DIR}/scripts/configure/zowe-install.yaml
 
 cp -r $INSTALL_DIR/scripts/configure/. ${ZOWE_ROOT_DIR}/scripts/configure
+
+# Create new config.properties
+. $INSTALL_DIR/scripts/zowe-create-config-properties.sh
+
 chmod -R 755 $ZOWE_ROOT_DIR/scripts/configure
 
 # Prepare utils directory 

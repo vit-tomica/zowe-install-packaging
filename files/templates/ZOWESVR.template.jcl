@@ -21,7 +21,8 @@
 //*                                                                  *
 //*                                                                  *
 //********************************************************************
-//ZOWESVR   PROC SRVRPATH='{{root_dir}}'
+//ZOWESVR   PROC SRVRPATH='{{root_dir}}',
+//      CONFIG='{{config_location}}'
 //*-------------------------------------------------------------------
 //* SRVRPATH - The path to the HFS directory where the 
 //*            server was installed.
@@ -31,7 +32,7 @@
 //* Start the node server
 //*---------------------------------------------------------
 //ZOWESTEP EXEC PGM=BPXBATSL,REGION=0M,TIME=NOLIMIT,
-//  PARM='PGM /bin/sh &SRVRPATH/scripts/internal/run-zowe.sh'
+//  PARM='PGM /bin/sh &SRVRPATH/scripts/internal/run-zowe.sh' &CONFIG
 //STDOUT   DD SYSOUT=*
 //STDERR   DD SYSOUT=*
 //*             PATHOPTS=ORDONLY
