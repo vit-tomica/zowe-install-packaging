@@ -10,13 +10,15 @@
 # Copyright IBM Corporation 2018, 2019
 ################################################################################
 
-#
 # Your JCL must invoke it like this:
 #
 # //        EXEC PGM=BPXBATSL,REGION=0M,TIME=NOLIMIT,
-# //  PARM='PGM /bin/sh &SRVRPATH/scripts/internal/run-zowe.sh'
-#
-#
+# //  PARM='PGM /bin/sh &SRVRPATH/scripts/internal/run-zowe.sh' &CONFIG
+# Where &CONFIG is the location of the zowe config.properties file
+
+# Read in properties by executing
+CONFIG_LOCATION=$1
+. $CONFIG_LOCATION
 
 # If -v passed in any validation failure result in the script exiting, other they are logged and continue
 while getopts ":v" opt; do
@@ -43,37 +45,9 @@ checkForErrorsFound() {
   fi
 }
 
-
-# New Cupids work - once we have PARMLIB/properties files removed properly this won't be needed anymore
-ROOT_DIR={{root_dir}} # the install directory of zowe
-USER_DIR={{user_dir}} # the workspace location for this instance. TODO Should we add this as a new to the yaml, or default it?
-FILES_API_PORT={{files_api_port}} # the port the files api service will use
-JOBS_API_PORT={{jobs_api_port}} # the port the files api service will use
-DISCOVERY_PORT={{discovery_port}} # the port the discovery service will use
-CATALOG_PORT={{catalog_port}} # the port the api catalog service will use
-GATEWAY_PORT={{gateway_port}} # the port the api gateway service will use
-VERIFY_CERTIFICATES={{verify_certificates}} # boolean saying if we accept only verified certificates
-STC_NAME={{stc_name}}
-
-# details to be read from higher level entry that instance PARMLIB/prop file?
-KEY_ALIAS={{key_alias}}
-KEYSTORE={{keystore}}
-TRUSTSTORE={{truststore}}
-KEYSTORE_PASSWORD={{keystore_password}}
-ZOSMF_PORT={{zosmf_port}}
-ZOSMF_IP_ADDRESS={{zosmf_ip_address}}
-ZOWE_IP_ADDRESS={{zowe_ip_address}}
-ZOWE_EXPLORER_HOST={{zowe_explorer_host}}
-ZOWE_JAVA_HOME={{java_home}}
-
-LAUNCH_COMPONENT_GROUPS=GATEWAY,DESKTOP
-
 LAUNCH_COMPONENTS=""
 
-export ZOWE_PREFIX={{zowe_prefix}}{{zowe_instance}}
-ZOWE_API_GW=${ZOWE_PREFIX}AG
-ZOWE_API_DS=${ZOWE_PREFIX}AD
-ZOWE_API_CT=${ZOWE_PREFIX}AC
+export ZOWE_PREFIX=${ZOWE_PREFIX}${ZOWE_INSTANCE}
 ZOWE_DESKTOP=${ZOWE_PREFIX}DT
 ZOWE_EXPL_UI_JES=${ZOWE_PREFIX}UJ
 ZOWE_EXPL_UI_MVS=${ZOWE_PREFIX}UD
@@ -84,12 +58,8 @@ mkdir -p ${USER_DIR}/
 . ${ROOT_DIR}/scripts/utils/validateDirectoryIsWritable.sh ${USER_DIR}
 checkForErrorsFound
 
-if [[ ! -f $NODE_HOME/"./bin/node" ]]
-then
-  export NODE_HOME={{node_home}}
-fi
-
 DIR=`dirname $0`
+
 
 if [[ $LAUNCH_COMPONENT_GROUPS == *"DESKTOP"* ]]
 then
@@ -103,7 +73,7 @@ then
   _BPX_JOBNAME=$ZOWE_EXPL_UI_MVS $DIR/../../mvs_explorer/scripts/start-explorer-mvs-ui-server.sh
   _BPX_JOBNAME=$ZOWE_EXPL_UI_USS $DIR/../../uss_explorer/scripts/start-explorer-uss-ui-server.sh
 fi
-
+ 
 if [[ $LAUNCH_COMPONENTS == *"api-mediation"* ]]
 then
   # Create the user configurable api-defs
@@ -140,33 +110,16 @@ then
   mv ${USER_DIR}/active_configuration.cfg ${USER_DIR}/backups/backup_configuration.${PREVIOUS_DATE}.cfg
 fi
 
-NOW=$(date +"%y.%m.%d.%H.%M.%S")
-#TODO - inject VERSION variable at build time?
 # Create a new active_configuration.cfg properties file with all the parsed parmlib properties stored in it,
-cat <<EOF >${USER_DIR}/active_configuration.cfg
-VERSION=1.5
+NOW=$(date +"%y.%m.%d.%H.%M.%S")
+ZOWE_VERSION=$(cat $ROOT_DIR/manifest.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
+cp $CONFIG_LOCATION ${USER_DIR}/active_configuration.properties
+cat <<EOF >> ${USER_DIR}/active_configuration.cfg
+VERSION=${ZOWE_VERSION}
 CREATION_DATE=${NOW}
 ROOT_DIR=${ROOT_DIR}
-USER_DIR=${USER_DIR}
-FILES_API_PORT=${FILES_API_PORT}
-JOBS_API_PORT=${JOBS_API_PORT}
-DISCOVERY_PORT=${DISCOVERY_PORT}
-CATALOG_PORT=${CATALOG_PORT}
-GATEWAY_PORT=${GATEWAY_PORT}
-VERIFY_CERTIFICATES=${VERIFY_CERTIFICATES}
-STC_NAME=${STC_NAME}
-KEY_ALIAS=${KEY_ALIAS}
-KEYSTORE=${KEYSTORE}
-TRUSTSTORE=${TRUSTSTORE}
-KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD}
 STATIC_DEF_CONFIG_DIR=${STATIC_DEF_CONFIG_DIR}
-ZOSMF_PORT=${ZOSMF_PORT}
-ZOSMF_IP_ADDRESS=${ZOSMF_IP_ADDRESS}
-ZOWE_IP_ADDRESS=${ZOWE_IP_ADDRESS}
-ZOWE_EXPLORER_HOST=${ZOWE_EXPLORER_HOST}
-ZOWE_JAVA_HOME=${ZOWE_JAVA_HOME}
 LAUNCH_COMPONENTS=${LAUNCH_COMPONENTS}
-LAUNCH_COMPONENT_GROUPS=${LAUNCH_COMPONENT_GROUPS}
 EOF
 
 # Copy manifest into user_dir so we know the version for support enquiries/migration
