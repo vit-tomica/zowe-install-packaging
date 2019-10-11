@@ -101,16 +101,16 @@ export TEMP_DIR=$INSTALL_DIR/temp_"`date +%Y-%m-%d`"
 mkdir -p $TEMP_DIR
 
 # Install the API Mediation Layer
-. $INSTALL_DIR/scripts/zowe-api-mediation-install.sh
+. $INSTALL_DIR/scripts/zowe-install-api-mediation.sh
 
 # Install the zLUX server
-. $INSTALL_DIR/scripts/zlux-install-script.sh
+. $INSTALL_DIR/scripts/zowe-install-zlux.sh
 
 # Install the Explorer API
-. $INSTALL_DIR/scripts/zowe-explorer-api-install.sh
+. $INSTALL_DIR/scripts/zowe-install-explorer-api.sh
 
 # Install Explorer UI plugins
-. $INSTALL_DIR/scripts/zowe-explorer-ui-install.sh
+. $INSTALL_DIR/scripts/zowe-install-explorer-ui.sh
 
 echo "---- After expanding zLUX artifacts this is a directory listing of "$ZOWE_ROOT_DIR >> $LOG_FILE
 ls $ZOWE_ROOT_DIR >> $LOG_FILE
@@ -148,7 +148,12 @@ sed -e "s#{{root_dir}}#${ZOWE_ROOT_DIR}#" \
   > "${ZOWE_ROOT_DIR}/scripts/templates/ZOWESVR.jcl"
 
 
-echo "Zowe ${ZOWE_VERSION} runtime install completed into directory "$ZOWE_ROOT_DIR
+echo "Creating MVS artefacts SZWEAUTH and SZWESAMP" >> $LOG_FILE
+. $INSTALL_DIR/scripts/zowe-install-MVS.sh
+
+echo "Zowe ${ZOWE_VERSION} runtime install completed into"
+echo "  directory " $ZOWE_ROOT_DIR
+echo "  datasets  " ${ZOWE_DSN_PREFIX}.SZWESAMP " and " ${ZOWE_DSN_PREFIX}.SZWEAUTH
 echo "The install script zowe-install.sh does not need to be re-run as it completed successfully"
 separator
 
@@ -190,5 +195,6 @@ then
   # Run configure - note not in source mode
   ${ZOWE_ROOT_DIR}/scripts/configure/zowe-configure.sh
 else
-  echo "zowe-install.sh -I was specified, so just installation ran. In order to use Zowe, you must configure it by running ${ZOWE_ROOT_DIR}/scripts/configure/zowe-configure.sh"
+    echo "zowe-install.sh -I was specified, so just installation ran. In order to use Zowe, you must configure it by running ${ZOWE_ROOT_DIR}/scripts/configure/zowe-configure.sh"
 fi
+
