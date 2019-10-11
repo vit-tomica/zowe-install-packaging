@@ -140,6 +140,7 @@ cp $INSTALL_DIR/scripts/run-zowe.sh $ZOWE_ROOT_DIR/scripts/internal/run-zowe.sh
 
 chmod -R 755 $ZOWE_ROOT_DIR/scripts/internal
 
+# TODO NOW - need to do continue statements if longer than a certain length
 #TODO LATER - do we need a better location rather than scripts - covered by zip #519
 sed -e "s#{{root_dir}}#${ZOWE_ROOT_DIR}#" \
   -e "s#{{config_location}}#${CONFIG_LOCATION}#" \
