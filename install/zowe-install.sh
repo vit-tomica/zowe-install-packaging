@@ -161,11 +161,6 @@ separator
 
 # Prepare configure directory 
 mkdir ${ZOWE_ROOT_DIR}/scripts/configure
-cp $INSTALL_DIR/scripts/zowe-init.sh ${ZOWE_ROOT_DIR}/scripts/configure
-cp $INSTALL_DIR/scripts/zowe-parse-yaml.sh ${ZOWE_ROOT_DIR}/scripts/configure
-# Copy all but root dir from yaml as we can derive that once there
-grep -v "rootDir=" $INSTALL_DIR/install/zowe-install.yaml > ${ZOWE_ROOT_DIR}/scripts/configure/zowe-install.yaml
-
 cp -r $INSTALL_DIR/scripts/configure/. ${ZOWE_ROOT_DIR}/scripts/configure
 
 # Create new config.properties

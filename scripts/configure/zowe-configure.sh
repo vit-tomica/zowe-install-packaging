@@ -42,11 +42,21 @@ chmod a+rw $LOG_FILE
 export TEMP_DIR=$CONFIG_DIR/temp_"`date +%Y-%m-%d`"
 mkdir -p $TEMP_DIR
 
-# Populate the environment variables for ZOWE_ZOSMF_PORT, ZOWE_JAVA_HOME, ZOWE_EXPLORER_HOST, ZOWE_IPADDRESS, NODE_HOME
-. $CONFIG_DIR/zowe-init.sh
-
-# zowe-parse-yaml.sh to get the variables for install directory, APIM certificate resources, installation proc, and server ports
-. $CONFIG_DIR/zowe-parse-yaml.sh
+# TODO TEMP - Read in the values from the config properties file by executing and migration back to the old variable names whilst the configure haven't been migrated
+. $CONFIG_DIR/config.properties
+ZOWE_EXPLORER_MVS_UI_PORT=$DATA_SET_UI_PORT
+ZOWE_EXPLORER_JES_UI_PORT=$JOBS_UI_PORT
+ZOWE_EXPLORER_USS_UI_PORT=$ZOS_UNIX_FILES_UI_PORT
+ZOWE_APIM_GATEWAY_PORT=$GATEWAY_PORT
+ZOWE_ZLUX_SERVER_HTTPS_PORT=$ZLUX_SERVER_HTTPS_PORT
+ZOWE_ZSS_SERVER_PORT=$ZSS_SERVER_PORT
+ZOWE_ZLUX_SSH_PORT=$ZLUX_SSH_PORT
+ZOWE_ZLUX_TELNET_PORT=$ZLUX_TELNET_PORT
+ZOWE_ZSS_XMEM_SERVER_NAME=$ZSS_XMEM_SERVER_NAME
+ZOWE_APIM_EXTERNAL_CERTIFICATE=$EXTERNAL_CERTIFICATE
+ZOWE_APIM_EXTERNAL_CERTIFICATE_ALIAS=$EXTERNAL_CERTIFICATE_ALIAS
+ZOWE_APIM_EXTERNAL_CERTIFICATE_AUTHORITIES=$EXTERNAL_CERTIFICATE_AUTHORITIES
+ZOWE_APIM_VERIFY_CERTIFICATES=$VERIFY_CERTIFICATES
 
 echo "Beginning to configure zowe installed in ${ZOWE_ROOT_DIR}"
 

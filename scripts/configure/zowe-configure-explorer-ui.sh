@@ -13,7 +13,7 @@
 #********************************************************************
 # Expected globals:
 # $ZOWE_ROOT_DIR
-# $NODE_HOME
+# $ZOWE_NODE_HOME
 # $LOG_FILE
 # $ZOWE_EXPLORER_HOST
 # $ZOWE_EXPLORER_JES_UI_PORT
@@ -24,7 +24,7 @@
 echo "<zowe-explorer-ui-configure.sh>" >> $LOG_FILE
 
 # define node bin
-NODE_BIN="$NODE_HOME/bin/node"
+NODE_BIN="$ZOWE_NODE_HOME/bin/node"
 if [ ! -f $NODE_BIN ]; then
   echo "Error: cannot find node bin: ${NODE_BIN}, explorer UI plugins are not installed."
   echo "Error: cannot find node bin: ${NODE_BIN}, explorer UI plugins are not installed." >> $LOG_FILE

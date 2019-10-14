@@ -35,5 +35,7 @@ sed \
   -e "s#{{zlux_ssh_port}}#${ZOWE_ZLUX_SSH_PORT}#" \
   -e "s#{{zlux_telnet_port}}#${ZOWE_ZLUX_TELNET_PORT}#" \
   -e "s#{{xmem_server_name}}#${ZOWE_ZSS_XMEM_SERVER_NAME}#" \
+  -e "s#{{proclib_data_set}}#${ZOWE_SERVER_PROCLIB_DSNAME}#" \
+  -e "s#{{proclib_member}}#${ZOWE_SERVER_PROCLIB_MEMBER}#" \
   "${INSTALL_DIR}/scripts/config.template.properties" \
   > "${CONFIG_LOCATION}"
