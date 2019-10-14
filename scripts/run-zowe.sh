@@ -16,10 +16,6 @@
 # //  PARM='PGM /bin/sh &SRVRPATH/scripts/internal/run-zowe.sh' &CONFIG
 # Where &CONFIG is the location of the zowe config.properties file
 
-# Read in properties by executing
-CONFIG_LOCATION=$1
-. $CONFIG_LOCATION
-
 # If -v passed in any validation failure result in the script exiting, other they are logged and continue
 while getopts ":v" opt; do
   case $opt in
@@ -32,6 +28,16 @@ while getopts ":v" opt; do
       ;;
   esac
 done
+
+# Read in properties by executing, then export all the keys so we don't need to shell share
+CONFIG_LOCATION=$1
+. $CONFIG_LOCATION
+while read -r line
+do
+    test -z "${line%%#*}" && continue      # skip line if first char is #
+    key=${line%%=*}
+    export $key
+done < $CONFIG_LOCATION
 
 checkForErrorsFound() {
   if [[ $ERRORS_FOUND > 0 ]]

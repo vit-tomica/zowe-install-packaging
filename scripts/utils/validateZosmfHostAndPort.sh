@@ -18,9 +18,9 @@ if [[ -z "${ZOSMF_IP_ADDRESS}" || -z "${ZOSMF_PORT}" ]]
 then 
     . ${ROOT_DIR}/scripts/utils/error.sh "ZOSMF_IP_ADDRESS and ZOSMF_PORT are not both set"
 else
-  if [ ! -z "$NODE_HOME" ];
+  if [ ! -z "$ZOWE_NODE_HOME" ];
   then
-    NODE_BIN=${NODE_HOME}/bin/node
+    NODE_BIN=${ZOWE_NODE_HOME}/bin/node
     RESPONSE_CODE=`$NODE_BIN ${ROOT_DIR}/scripts/utils/zosmfHttpRequest.js ${ZOSMF_IP_ADDRESS} ${ZOSMF_PORT}`
     if [[ -z "${RESPONSE_CODE}" ]]
     then
