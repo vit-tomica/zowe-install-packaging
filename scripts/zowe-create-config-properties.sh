@@ -2,7 +2,7 @@ sed \
   -e "s#{{zowe_prefix}}#${ZOWE_PREFIX}#" \
   -e "s#{{zowe_instance}}#${ZOWE_INSTANCE}#" \
   -e "s#{{user_dir}}#${ZOWE_USER_DIR}#" \
-  -e "s#{{config_location}}#${ZOWE_ROOT_DIR}/scripts/configure/config.properties}#" \
+  -e "s#{{config_location}}#${ZOWE_ROOT_DIR}/scripts/configure/config.properties#" \
   -e "s#{{launch_component_groups}}#${LAUNCH_COMPONENT_GROUPS}#" \
   -e "s#{{java_home}}#${ZOWE_JAVA_HOME}#" \
   -e "s#{{node_home}}#${NODE_HOME}#" \
