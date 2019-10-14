@@ -136,7 +136,7 @@ chmod 770 "${ZOWE_ROOT_DIR}/scripts/configure/zowe-config-stc.sh"
 
 # TODO LATER - same as the above - zss won't start with those permissions,
 sed -e "s#{{root_dir}}#${ZOWE_ROOT_DIR}#" \
-  -e "s#{{zosmf_admin_group}}#${ZOWE_ZOSMF_ADMIN_GROUP}#" \
+  -e "s#{{zosmf_admin_group}}#${ZOSMF_ADMIN_GROUP}#" \
   -e "s#{{configure_log_file}}#${LOG_FILE}#" \
   "$ZOWE_ROOT_DIR/scripts/templates/zowe-runtime-authorize.template.sh" \
   > "$ZOWE_ROOT_DIR/scripts/zowe-runtime-authorize.sh"

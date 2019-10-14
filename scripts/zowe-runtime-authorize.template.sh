@@ -11,7 +11,7 @@
 
 set -e
 ZOWE_ROOT_DIR={{root_dir}}
-ZOWE_ZOSMF_ADMIN_GROUP={{zosmf_admin_group}}
+ZOSMF_ADMIN_GROUP={{zosmf_admin_group}}
 LOG_FILE={{configure_log_file}}
 
 echo "<zowe-runtime-authorize.sh>" >> $LOG_FILE
@@ -33,7 +33,7 @@ echo "  Completed find and chmods to add o+x on directories" >> $LOG_FILE
 chmod -R g+w ${ZOWE_ROOT_DIR}/zlux-app-server/log
 
 # If this step fails it is because the user running this script is not part of the IZUADMIN group
-chgrp -R ${ZOWE_ZOSMF_ADMIN_GROUP} ${ZOWE_ROOT_DIR}
+chgrp -R ${ZOSMF_ADMIN_GROUP} ${ZOWE_ROOT_DIR}
 
 
 chmod -R 770 ${ZOWE_ROOT_DIR}/zlux-app-server/deploy
