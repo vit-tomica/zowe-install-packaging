@@ -10,8 +10,6 @@
 # Copyright IBM Corporation 2019
 ################################################################################
 
-#TODO LATER - SH: once the api-layer update has gone in remove this old version
-
 #Make sure Java is available on the path - 
 export JAVA_HOME=$ZOWE_JAVA_HOME
 if [[ ":$PATH:" != *":$JAVA_HOME/bin:"* ]];

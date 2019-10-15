@@ -16,6 +16,18 @@
 # //  PARM='PGM /bin/sh &SRVRPATH/scripts/internal/run-zowe.sh' &CONFIG
 # Where &CONFIG is the location of the zowe config.properties file
 
+checkForErrorsFound() {
+  if [[ $ERRORS_FOUND > 0 ]]
+  then
+    # if -v passed in any validation failures abort
+    if [ ! -z $VALIDATE_ABORTS ]
+    then
+      echo "$ERRORS_FOUND errors were found during validatation, please check the message, correct any properties required in ${ROOT_DIR}/scripts/internal/run-zowe.sh and re-launch Zowe"
+      exit $ERRORS_FOUND
+    fi
+  fi
+}
+
 # If -v passed in any validation failure result in the script exiting, other they are logged and continue
 while getopts ":v" opt; do
   case $opt in
@@ -29,7 +41,7 @@ while getopts ":v" opt; do
   esac
 done
 
-export ZOWE_ROOT_DIR=$(cd $(dirname $0)/../../;pwd) #we are in <ZOWE_ROOT_DIR>/scripts/internal/run-zowe.sh
+export ROOT_DIR=$(cd $(dirname $0)/../../;pwd) #we are in <ROOT_DIR>/scripts/internal/run-zowe.sh
 
 # Read in properties by executing, then export all the keys so we don't need to shell share
 CONFIG_LOCATION=$1
@@ -41,18 +53,6 @@ do
     export $key
 done < $CONFIG_LOCATION
 
-checkForErrorsFound() {
-  if [[ $ERRORS_FOUND > 0 ]]
-  then
-    # if -v passed in any validation failures abort
-    if [ ! -z $VALIDATE_ABORTS ]
-    then
-      echo "$ERRORS_FOUND errors were found during validatation, please check the message, correct any properties required in ${ROOT_DIR}/scripts/internal/run-zowe.sh and re-launch Zowe"
-      exit $ERRORS_FOUND
-    fi
-  fi
-}
-
 LAUNCH_COMPONENTS=""
 
 export ZOWE_PREFIX=${ZOWE_PREFIX}${ZOWE_INSTANCE}
@@ -63,7 +63,12 @@ ZOWE_EXPL_UI_USS=${ZOWE_PREFIX}UU
 
 # Make sure ROOT DIR and USER DIR are accessible and writable to the user id running this
 mkdir -p ${USER_DIR}/
-. ${ROOT_DIR}/scripts/utils/validateDirectoryIsWritable.sh ${USER_DIR}
+. ${ROOT_DIR}/scripts/utils/validate-directory-is-writable.sh ${USER_DIR}
+checkForErrorsFound
+
+# Make sure Java and Node are available on the Path
+. ${ROOT_DIR}/scripts/utils/configure-java.sh
+. ${ROOT_DIR}/scripts/utils/configure-node.sh
 checkForErrorsFound
 
 DIR=`dirname $0`
