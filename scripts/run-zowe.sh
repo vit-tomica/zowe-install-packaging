@@ -29,6 +29,8 @@ while getopts ":v" opt; do
   esac
 done
 
+export ZOWE_ROOT_DIR=$(cd $(dirname $0)/../../;pwd) #we are in <ZOWE_ROOT_DIR>/scripts/internal/run-zowe.sh
+
 # Read in properties by executing, then export all the keys so we don't need to shell share
 CONFIG_LOCATION=$1
 . $CONFIG_LOCATION
